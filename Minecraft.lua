@@ -1,7 +1,7 @@
 
 local path = "/"..shell.dir()
 
-local Pine3D = require("Pine3D-minified")
+local Pine3D = require("Pine3D")
 local betterblittle = require("betterblittle")
 local noise = require("noise")
 os.loadAPI(path.."/blittle")
