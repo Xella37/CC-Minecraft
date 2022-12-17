@@ -3,6 +3,8 @@ A Minecraft game for CC to run in Minecraft!
 
 Pine3D Page: https://pine3d.cc/mc-in-mc
 
+Install with: `pastebin run hgm142Pj`
+
 ## Controls
 
 WASD \- movement  
