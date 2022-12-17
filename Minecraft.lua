@@ -1,7 +1,7 @@
 
 local path = "/"..shell.dir()
 
-local Pine3D = require("Pine3D")
+local Pine3D = require("Pine3D-minified")
 local betterblittle = require("betterblittle")
 local noise = require("noise")
 os.loadAPI(path.."/blittle")
@@ -138,15 +138,12 @@ end
 
 
 local seed = 0
-local size = 2
 local maxHeightTerrain = 5
 local maxHeightChunk = maxHeightTerrain+7
 local chunkSize = 16
 local terrainSmoothness = 2
 local renderDistance = 1
 local selectedBlock = "dirt"
-
-local gameState = "mainMenu"
 
 local loadedChunks = {}
 
@@ -291,7 +288,7 @@ local function updateChunkMesh(chunkX, chunkZ, unloading)
 	end
 end
 
-function setBlock(x, y, z, id, updateConnectedMeshes)
+local function setBlock(x, y, z, id, updateConnectedMeshes)
 	if not grid[x] then grid[x] = {} end
 	if not grid[x][y] then grid[x][y] = {} end
 
@@ -322,11 +319,11 @@ function setBlock(x, y, z, id, updateConnectedMeshes)
 	end
 end
 
-function getBlock(x, y, z)
+local function getBlock(x, y, z)
 	return grid[x] and grid[x][y] and grid[x][y][z] or nil
 end
 
-function removeBlock(x, y, z)
+local function removeBlock(x, y, z)
 	local block = getBlock(x, y, z)
 	if block then
 		for i = 1, #objects do
@@ -653,7 +650,7 @@ end
 
 udpdateWorld()
 
-function drawNiceBorder(win, x1, y1, x2, y2, bg, fg)
+local function drawNiceBorder(win, x1, y1, x2, y2, bg, fg)
 	local s = string.rep(" ", x2-x1+1-2)
 	win.setBackgroundColor(bg)
 	for y = y1+1, y2-1 do
@@ -707,7 +704,7 @@ function drawNiceBorder(win, x1, y1, x2, y2, bg, fg)
 	win.write(string.char(133))
 end
 
-function drawButton(win, x1, y1, x2, y2, text, bg, fg, tc)
+local function drawButton(win, x1, y1, x2, y2, text, bg, fg, tc)
 	drawNiceBorder(win, x1, y1, x2, y2, bg, fg)
 	win.setTextColor(tc)
 	win.setBackgroundColor(bg)
@@ -718,7 +715,7 @@ end
 local hotbar = paintutils.loadImage("hotbar.nfp")
 local hotbarb = paintutils.loadImage("hotbarb.nfp")
 
-function renderPauseMenu()
+local function renderPauseMenu()
 	menusWindow.setVisible(false)
 	local w, h = menusWindow.getSize()
 	drawNiceBorder(menusWindow, 1, 1, w, h, colors.brown, colors.green)
@@ -746,7 +743,7 @@ end
 
 local frameTimes = {}
 local lastFrameTime = os.clock()
-function render3DGraphics()
+local function render3DGraphics()
 	ThreeDFrame:drawObjects(objects)
 
 	local buff = ThreeDFrame.buffer
@@ -804,7 +801,7 @@ function render3DGraphics()
 	ThreeDFrame:drawBuffer()
 end
 
-function renderFPS(frames, lastFPSTime)
+local function renderFPS(frames, lastFPSTime)
 	local currentTime = os.clock()
 
 	local frames = frames + 1
@@ -1126,7 +1123,7 @@ local function chunkLoading()
 	end
 end
 
-function openWorld(id)
+local function openWorld(id)
 	worldId = id
 	pauseMenu = false
 
@@ -1181,7 +1178,7 @@ function openWorld(id)
 end
 
 local newWorldName = ""
-function renderCreateWorld(fields, fieldsDefault, fieldsValues, selectedField, errMessage)
+local function renderCreateWorld(fields, fieldsDefault, fieldsValues, selectedField, errMessage)
 	screenWidth, screenHeight = term.getSize()
 	bigMenuWindow.setVisible(false)
 
@@ -1293,7 +1290,7 @@ function renderCreateWorld(fields, fieldsDefault, fieldsValues, selectedField, e
 	bigMenuWindow.setVisible(true)
 end
 
-function createWorld()
+local function createWorld()
 	newWorldName = ""
 
 	local fields = {"Seed", "Chunk Size", "Terr Height", "Smoothness"}
@@ -1408,7 +1405,7 @@ function createWorld()
 end
 
 local worldSelectionScroll = 0
-function renderWorldSelection()
+local function renderWorldSelection()
 	screenWidth, screenHeight = term.getSize()
 	bigMenuWindow.setVisible(false)
 
@@ -1485,7 +1482,7 @@ function renderWorldSelection()
 	worldListWindow.setVisible(false)
 end
 
-function worldSelection()
+local function worldSelection()
 	worldSelectionScroll = 0
 
 	while true do
@@ -1584,7 +1581,7 @@ function worldSelection()
 	end
 end
 
-function renderMainMenu()
+local function renderMainMenu()
 	screenWidth, screenHeight = term.getSize()
 
 	term.setBackgroundColor(colors.brown)
@@ -1604,7 +1601,7 @@ function renderMainMenu()
 	logoWindow.setVisible(true)
 end
 
-function mainMenu()
+local function mainMenu()
 	while true do
 		renderMainMenu()
 
